@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบลงทะเบียนและประเมินความเสี่ยงสุขภาพเบื้องต้น</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="app-header">
+        <div class="container header-content">
+            <span class="material-icons header-icon">local_hospital</span>
+            <div>
+                <h1>ระบบลงทะเบียนและประเมินความเสี่ยงสุขภาพเบื้องต้น</h1>
+                <p class="subtitle">Patient Health Risk Assessment and Registration System</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <!-- Registration Form -->
+        <div class="paper form-section" id="registration-form">
+            <h2 class="section-title">
+                <span class="material-icons">person_add</span>
+                ลงทะเบียนข้อมูลผู้ป่วย
+            </h2>
+
+            <form id="healthForm" novalidate>
+                <div class="grid-2">
+                    <!-- ชื่อ -->
+                    <div class="form-group">
+                        <label for="firstName">ชื่อ <span class="required">*</span></label>
+                        <input type="text" id="firstName" class="text-field" placeholder="กรอกชื่อ" required>
+                        <span class="error-text" id="firstNameError"></span>
+                    </div>
+
+                    <!-- นามสกุล -->
+                    <div class="form-group">
+                        <label for="lastName">นามสกุล <span class="required">*</span></label>
+                        <input type="text" id="lastName" class="text-field" placeholder="กรอกนามสกุล" required>
+                        <span class="error-text" id="lastNameError"></span>
+                    </div>
+
+                    <!-- อายุ -->
+                    <div class="form-group">
+                        <label for="age">อายุ (ปี) <span class="required">*</span></label>
+                        <input type="number" id="age" class="text-field" placeholder="กรอกอายุ" min="1" max="150" required>
+                        <span class="error-text" id="ageError"></span>
+                    </div>
+
+                    <!-- เพศ -->
+                    <div class="form-group">
+                        <label>เพศ <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="gender" value="male"> ชาย
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="gender" value="female"> หญิง
+                            </label>
+                        </div>
+                        <span class="error-text" id="genderError"></span>
+                    </div>
+
+                    <!-- น้ำหนัก -->
+                    <div class="form-group">
+                        <label for="weight">น้ำหนัก (กก.) <span class="required">*</span></label>
+                        <input type="number" id="weight" class="text-field" placeholder="กรอกน้ำหนัก" min="1" max="500" step="0.1" required>
+                        <span class="error-text" id="weightError"></span>
+                    </div>
+
+                    <!-- ส่วนสูง -->
+                    <div class="form-group">
+                        <label for="height">ส่วนสูง (ซม.) <span class="required">*</span></label>
+                        <input type="number" id="height" class="text-field" placeholder="กรอกส่วนสูง" min="30" max="300" step="0.1" required>
+                        <span class="error-text" id="heightError"></span>
+                    </div>
+                </div>
+
+                <!-- พฤติกรรมความเสี่ยง -->
+                <div class="form-group" style="margin-top: 1rem;">
+                    <label>พฤติกรรมความเสี่ยง</label>
+                    <div class="radio-group vertical">
+                        <label class="radio-label">
+                            <input type="radio" name="riskBehavior" value="none" checked> ไม่มีพฤติกรรมเสี่ยง
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="riskBehavior" value="smoking"> สูบบุหรี่
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="riskBehavior" value="drinking"> ดื่มแอลกอฮอล์เป็นประจำ
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="riskBehavior" value="both"> สูบบุหรี่และดื่มแอลกอฮอล์
+                        </label>
+                    </div>
+                </div>
+
+                <!-- โรคประจำตัว -->
+                <div class="form-group">
+                    <label for="conditions">โรคประจำตัว</label>
+                    <select id="conditions" class="text-field select-field" multiple>
+                        <option value="none">ไม่มี</option>
+                        <option value="diabetes">เบาหวาน</option>
+                        <option value="hypertension">ความดันโลหิตสูง</option>
+                        <option value="heart">โรคหัวใจ</option>
+                        <option value="kidney">โรคไต</option>
+                        <option value="cancer">โรคมะเร็ง</option>
+                        <option value="obesity">โรคอ้วน</option>
+                    </select>
+                    <span class="hint-text">กด Ctrl + คลิก เพื่อเลือกหลายรายการ</span>
+                </div>
+
+                <!-- Buttons -->
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary" id="assessBtn">
+                        <span class="material-icons">assessment</span>
+                        ประเมินผล
+                    </button>
+                    <button type="button" class="btn btn-secondary" id="resetBtn">
+                        <span class="material-icons">refresh</span>
+                        ล้างข้อมูล
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Alert Messages -->
+        <div id="alertContainer"></div>
+
+        <!-- Result Dialog (shown as inline section) -->
+        <div class="paper result-section" id="resultSection" style="display: none;">
+            <h2 class="section-title">
+                <span class="material-icons">summarize</span>
+                สรุปผลการประเมินความเสี่ยงสุขภาพ
+            </h2>
+
+            <div class="result-grid">
+                <!-- Patient Info Card -->
+                <div class="result-card">
+                    <h3><span class="material-icons">badge</span> ข้อมูลผู้ป่วย</h3>
+                    <div class="info-row">
+                        <span class="info-label">ชื่อ-นามสกุล:</span>
+                        <span class="info-value" id="resultName"></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">อายุ:</span>
+                        <span class="info-value" id="resultAge"></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">เพศ:</span>
+                        <span class="info-value" id="resultGender"></span>
+                    </div>
+                </div>
+
+                <!-- BMI Card -->
+                <div class="result-card">
+                    <h3><span class="material-icons">monitor_weight</span> ผลการคำนวณ BMI</h3>
+                    <div class="bmi-display">
+                        <div class="bmi-value" id="resultBMI">--</div>
+                        <div class="bmi-category" id="resultBMICategory">--</div>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">น้ำหนัก:</span>
+                        <span class="info-value" id="resultWeight"></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">ส่วนสูง:</span>
+                        <span class="info-value" id="resultHeight"></span>
+                    </div>
+                </div>
+
+                <!-- Risk Level Card -->
+                <div class="result-card full-width">
+                    <h3><span class="material-icons">health_and_safety</span> ระดับความเสี่ยง</h3>
+                    <div class="risk-display">
+                        <div class="risk-chip" id="riskChip">--</div>
+                    </div>
+                    <div class="risk-factors" id="riskFactors"></div>
+                </div>
+
+                <!-- Recommendations Card -->
+                <div class="result-card full-width">
+                    <h3><span class="material-icons">tips_and_updates</span> คำแนะนำการปฏิบัติตน</h3>
+                    <div id="recommendations"></div>
+                </div>
+            </div>
+
+            <div class="button-group" style="margin-top: 1.5rem;">
+                <button class="btn btn-primary" id="printBtn" onclick="window.print()">
+                    <span class="material-icons">print</span>
+                    พิมพ์ผลการประเมิน
+                </button>
+                <button class="btn btn-secondary" id="newAssessBtn">
+                    <span class="material-icons">add_circle</span>
+                    ประเมินใหม่
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <div class="container">
+            <p>&copy; 2026 ระบบลงทะเบียนและประเมินความเสี่ยงสุขภาพเบื้องต้น | Patient Health Risk Assessment System</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
